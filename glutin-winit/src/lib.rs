@@ -179,7 +179,7 @@ fn create_display(
         ApiPreference::FallbackEgl => DisplayApiPreference::WglThenEgl(_raw_window_handle),
     };
 
-    let handle = event_loop.glutin_display_handle()?.as_raw();
+    let handle = event_loop.display_handle()?.as_raw();
     unsafe { Ok(Display::new(handle, _preference)?) }
 }
 
