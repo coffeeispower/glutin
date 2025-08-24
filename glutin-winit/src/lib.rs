@@ -99,7 +99,7 @@ impl DisplayBuilder {
         event_loop: &impl GlutinEventLoop,
         template_builder: ConfigTemplateBuilder,
         config_picker: Picker,
-    ) -> Result<(Option<Window>, Config), Box<dyn Error>>
+    ) -> Result<(Option<Box<dyn Window>>, Config), Box<dyn Error>>
     where
         Picker: FnOnce(Box<dyn Iterator<Item = Config> + '_>) -> Config,
     {
@@ -195,7 +195,7 @@ pub fn finalize_window(
     event_loop: &impl GlutinEventLoop,
     mut attributes: WindowAttributes,
     gl_config: &Config,
-) -> Result<Window, OsError> {
+) -> Result<Box<dyn Window>, OsError> {
     // Disable transparency if the end config doesn't support it.
     if gl_config.supports_transparency() == Some(false) {
         attributes = attributes.with_transparent(false);
