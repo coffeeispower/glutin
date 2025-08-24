@@ -26,7 +26,7 @@ use glutin::prelude::*;
 use raw_window_handle::HasWindowHandle;
 
 use raw_window_handle::RawWindowHandle;
-use winit::error::OsError;
+use winit::error::RequestError;
 use winit::window::{Window, WindowAttributes};
 
 #[cfg(glx_backend)]
@@ -193,7 +193,7 @@ pub fn finalize_window(
     event_loop: &impl ActiveEventLoop,
     mut attributes: WindowAttributes,
     gl_config: &Config,
-) -> Result<Box<dyn Window>, OsError> {
+) -> Result<Box<dyn Window>, RequestError> {
     // Disable transparency if the end config doesn't support it.
     if gl_config.supports_transparency() == Some(false) {
         attributes = attributes.with_transparent(false);
