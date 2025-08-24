@@ -25,7 +25,7 @@ use glutin::prelude::*;
 #[cfg(wgl_backend)]
 use raw_window_handle::HasWindowHandle;
 
-use raw_window_handle::RawWindowHandle;
+use raw_window_handle::{RawWindowHandle, HasDisplayHandle};
 use winit::error::RequestError;
 use winit::window::{Window, WindowAttributes};
 
@@ -146,7 +146,7 @@ impl DisplayBuilder {
     }
 }
 
-fn create_display<Ev: ActiveEventLoop + HasWindowHandle>(
+fn create_display<Ev: ActiveEventLoop + HasDisplayHandle>(
     event_loop: &Ev,
     _api_preference: ApiPreference,
     _raw_window_handle: Option<RawWindowHandle>,
