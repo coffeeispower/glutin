@@ -146,8 +146,8 @@ impl DisplayBuilder {
     }
 }
 
-fn create_display(
-    event_loop: &impl ActiveEventLoop,
+fn create_display<Ev: ActiveEventLoop + HasWindowHandle>(
+    event_loop: &Ev,
     _api_preference: ApiPreference,
     _raw_window_handle: Option<RawWindowHandle>,
 ) -> Result<Display, Box<dyn Error>> {
