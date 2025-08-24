@@ -17,7 +17,7 @@ use std::error::Error;
 use glutin::config::{Config, ConfigTemplateBuilder};
 use glutin::display::{Display, DisplayApiPreference};
 #[cfg(x11_platform)]
-use winit::platform::x11::WindowAttributesExtX11;
+use winit::platform::x11::WindowAttributesX11;
 #[cfg(x11_platform)]
 use glutin::platform::x11::X11GlConfigExt;
 use glutin::prelude::*;
@@ -201,7 +201,7 @@ pub fn finalize_window(
 
     #[cfg(x11_platform)]
     let attributes = if let Some(x11_visual) = gl_config.x11_visual() {
-        attributes.with_x11_visual(x11_visual.visual_id() as _)
+        attributes.with_platform_attributes(Box::new(WindowAttributesX11::default().with_x11_visual(x11_visual.visual_id() as _)))
     } else {
         attributes
     };
