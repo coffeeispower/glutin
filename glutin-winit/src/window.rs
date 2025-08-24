@@ -52,7 +52,7 @@ impl<T: Window> GlWindow for T {
         &self,
         builder: SurfaceAttributesBuilder<WindowSurface>,
     ) -> Result<SurfaceAttributes<WindowSurface>, HandleError> {
-        let (w, h) = self.inner_size().non_zero().expect("invalid zero inner size");
+        let (w, h) = self.surface_size().non_zero().expect("invalid zero inner size");
         let handle = self.window_handle()?.as_raw();
         Ok(builder.build(handle, w, h))
     }
