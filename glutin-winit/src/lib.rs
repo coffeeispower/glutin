@@ -8,16 +8,16 @@
 #![deny(missing_docs)]
 #![cfg_attr(clippy, deny(warnings))]
 
-mod event_loop;
 mod window;
 
-use event_loop::GlutinEventLoop;
 pub use window::GlWindow;
 
 use std::error::Error;
 
 use glutin::config::{Config, ConfigTemplateBuilder};
 use glutin::display::{Display, DisplayApiPreference};
+#[cfg(x11_platform)]
+use winit::platform::x11::WindowAttributesExtX11;
 #[cfg(x11_platform)]
 use glutin::platform::x11::X11GlConfigExt;
 use glutin::prelude::*;
@@ -31,8 +31,6 @@ use winit::window::{Window, WindowAttributes};
 
 #[cfg(glx_backend)]
 use winit::platform::x11::register_xlib_error_hook;
-#[cfg(x11_platform)]
-use winit::platform::x11::WindowAttributesX11;
 
 #[cfg(all(not(egl_backend), not(glx_backend), not(wgl_backend), not(cgl_backend)))]
 compile_error!("Please select at least one api backend");
@@ -96,7 +94,7 @@ impl DisplayBuilder {
     /// otherwise only builtin functions like `glClear` will be available.
     pub fn build<Picker>(
         mut self,
-        event_loop: &impl GlutinEventLoop,
+        event_loop: &impl EventLoop,
         template_builder: ConfigTemplateBuilder,
         config_picker: Picker,
     ) -> Result<(Option<Box<dyn Window>>, Config), Box<dyn Error>>
@@ -149,7 +147,7 @@ impl DisplayBuilder {
 }
 
 fn create_display(
-    event_loop: &impl GlutinEventLoop,
+    event_loop: &impl EventLoop,
     _api_preference: ApiPreference,
     _raw_window_handle: Option<RawWindowHandle>,
 ) -> Result<Display, Box<dyn Error>> {
@@ -192,7 +190,7 @@ fn create_display(
 /// [`Window`]: winit::window::Window
 /// [`Config`]: glutin::config::Config
 pub fn finalize_window(
-    event_loop: &impl GlutinEventLoop,
+    event_loop: &impl EventLoop,
     mut attributes: WindowAttributes,
     gl_config: &Config,
 ) -> Result<Box<dyn Window>, OsError> {
