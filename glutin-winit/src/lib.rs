@@ -190,7 +190,7 @@ fn create_display<Ev: ActiveEventLoop + HasDisplayHandle + ?Sized>(
 /// [`Window`]: winit::window::Window
 /// [`Config`]: glutin::config::Config
 pub fn finalize_window(
-    event_loop: &impl ActiveEventLoop + ?Sized,
+    event_loop: &(impl ActiveEventLoop + ?Sized),
     mut attributes: WindowAttributes,
     gl_config: &Config,
 ) -> Result<Box<dyn Window>, RequestError> {
