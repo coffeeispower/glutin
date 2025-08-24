@@ -92,9 +92,9 @@ impl DisplayBuilder {
     /// **WGL:** - [`WindowAttributes`] **must** be passed in
     /// [`Self::with_window_attributes()`] if modern OpenGL(ES) is desired,
     /// otherwise only builtin functions like `glClear` will be available.
-    pub fn build<Picker>(
+    pub fn build<Picker, Ev: ActiveEventLoop + HasDisplayHandle>(
         mut self,
-        event_loop: &impl ActiveEventLoop,
+        event_loop: &Ev,
         template_builder: ConfigTemplateBuilder,
         config_picker: Picker,
     ) -> Result<(Option<Box<dyn Window>>, Config), Box<dyn Error>>
