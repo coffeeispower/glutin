@@ -47,7 +47,7 @@ pub trait GlWindow {
     );
 }
 
-impl<T: Window> GlWindow for T {
+impl<T: Window + HasWindowHandle> GlWindow for T {
     fn build_surface_attributes(
         &self,
         builder: SurfaceAttributesBuilder<WindowSurface>,
@@ -62,7 +62,7 @@ impl<T: Window> GlWindow for T {
         surface: &Surface<impl SurfaceTypeTrait + ResizeableSurface>,
         context: &PossiblyCurrentContext,
     ) {
-        if let Some((w, h)) = self.inner_size().non_zero() {
+        if let Some((w, h)) = self.surface_size().non_zero() {
             surface.resize(context, w, h)
         }
     }
