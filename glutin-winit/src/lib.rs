@@ -13,7 +13,7 @@ mod window;
 pub use window::GlWindow;
 
 use std::error::Error;
-
+use winit::event_loop::EventLoop;
 use glutin::config::{Config, ConfigTemplateBuilder};
 use glutin::display::{Display, DisplayApiPreference};
 #[cfg(x11_platform)]
