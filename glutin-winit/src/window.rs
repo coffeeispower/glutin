@@ -47,7 +47,7 @@ pub trait GlWindow {
     );
 }
 
-impl<T: Window + HasWindowHandle> GlWindow for T {
+impl<T: Window + HasWindowHandle + ?Sized> GlWindow for T {
     fn build_surface_attributes(
         &self,
         builder: SurfaceAttributesBuilder<WindowSurface>,
