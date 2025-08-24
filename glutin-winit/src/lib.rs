@@ -13,7 +13,7 @@ mod window;
 pub use window::GlWindow;
 
 use std::error::Error;
-use winit::event_loop::EventLoop;
+use winit::event_loop::ActiveEventLoop;
 use glutin::config::{Config, ConfigTemplateBuilder};
 use glutin::display::{Display, DisplayApiPreference};
 #[cfg(x11_platform)]
@@ -94,7 +94,7 @@ impl DisplayBuilder {
     /// otherwise only builtin functions like `glClear` will be available.
     pub fn build<Picker>(
         mut self,
-        event_loop: &impl EventLoop,
+        event_loop: &impl ActiveEventLoop,
         template_builder: ConfigTemplateBuilder,
         config_picker: Picker,
     ) -> Result<(Option<Box<dyn Window>>, Config), Box<dyn Error>>
@@ -147,7 +147,7 @@ impl DisplayBuilder {
 }
 
 fn create_display(
-    event_loop: &impl EventLoop,
+    event_loop: &impl ActiveEventLoop,
     _api_preference: ApiPreference,
     _raw_window_handle: Option<RawWindowHandle>,
 ) -> Result<Display, Box<dyn Error>> {
@@ -190,7 +190,7 @@ fn create_display(
 /// [`Window`]: winit::window::Window
 /// [`Config`]: glutin::config::Config
 pub fn finalize_window(
-    event_loop: &impl EventLoop,
+    event_loop: &impl ActiveEventLoop,
     mut attributes: WindowAttributes,
     gl_config: &Config,
 ) -> Result<Box<dyn Window>, OsError> {
